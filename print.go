@@ -1,3 +1,5 @@
+// Package svgJoin Copyright 2023 Gryaznov Nikita
+// Licensed under the Apache License, Version 2.0
 package svgJoin
 
 import (
@@ -11,14 +13,11 @@ func (s *xy) add(x xy) {
 }
 
 func (s Chunk) print(pos xy) (result string, err error) {
-	if s.body == "" || s.viewBox.x == 0 || s.viewBox.y == 0 || s.viewport.x == 0 || s.viewport.y == 0 {
+	if  s.viewBox.x == 0 || s.viewBox.y == 0 || s.viewport.x == 0 || s.viewport.y == 0 {
 		if s.body == "" && s.viewBox.x == 0 && s.viewBox.y == 0 && s.viewport.x == 0 && s.viewport.y == 0 {
 			return
 		}
 		var errStr string
-		if s.body == "" {
-			errStr += "body"
-		}
 		if s.viewBox.x == 0 {
 			if errStr != "" {
 				errStr += ", "
@@ -59,10 +58,10 @@ func (s Chunk) print(pos xy) (result string, err error) {
 	}
 
 	if isScale {
-		result += fmt.Sprintf("<g transform=\"scale(%f, %f)\">\n", s.viewport.x/s.viewBox.x, s.viewport.y/s.viewBox.y)
+		result += fmt.Sprintf("<g transform=\"scale(%-1g, %-1g)\">\n", s.viewport.x/s.viewBox.x, s.viewport.y/s.viewBox.y)
 	}
 	if isTranslate {
-		result += fmt.Sprintf("<g transform=\"translate(%f, %f)\">\n", s.position.x, s.position.y)
+		result += fmt.Sprintf("<g transform=\"translate(%-1g, %-1g)\">\n", s.position.x, s.position.y)
 	}
 	result += s.body
 	if isScale {
@@ -181,12 +180,12 @@ func (s Group) size() (o xy) {
 func (s Group) Draw() (pic string, err error) {
 	size := s.size()
 	pic, err = s.print(xy{})
-	pic = fmt.Sprintf("<svg width=\"%g\" height=\"%g\" viewBox=\"0 0 %g %g\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n%s\n</svg>", size.x, size.y, size.x, size.y, pic)
+	pic = fmt.Sprintf("<svg width=\"%g\" height=\"%g\" viewBox=\"0 0 %g %g\" xmlns=\"http://www.w3.org/2000/svg\">\n%s\n</svg>", size.x, size.y, size.x, size.y, pic)
 	return
 }
 func (s Chunk) Draw() (pic string, err error) {
 	size := s.size()
 	pic, err = s.print(xy{})
-	pic = fmt.Sprintf("<svg width=\"%g\" height=\"%g\" viewBox=\"0 0 %g %g\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n%s\n</svg>", size.x, size.y, size.x, size.y, pic)
+	pic = fmt.Sprintf("<svg width=\"%g\" height=\"%g\" viewBox=\"0 0 %g %g\" xmlns=\"http://www.w3.org/2000/svg\">\n%s\n</svg>", size.x, size.y, size.x, size.y, pic)
 	return
 }

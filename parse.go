@@ -1,3 +1,5 @@
+// Package svgJoin Copyright 2023 Gryaznov Nikita
+// Licensed under the Apache License, Version 2.0
 package svgJoin
 
 import (
@@ -19,9 +21,6 @@ func Parse(svg string) (part Chunk, err error) {
 	part.position.x, part.position.y, part.viewBox.x, part.viewBox.y, tmpErr = getViewBoxData(firstLine)
 	switch tmpErr.code {
 	case 0:
-	case 10:
-		err = tmpErr
-		return
 	case 11:
 		noViewbox = true
 	default:
@@ -38,15 +37,12 @@ func Parse(svg string) (part Chunk, err error) {
 		if noViewbox {
 			part.viewBox = part.viewport
 		}
-	case 20:
+	default:
 		part.viewport = part.viewBox
 	case 21:
 		part.viewport.x = part.viewBox.x * part.viewport.y / part.viewBox.y
 	case 22:
 		part.viewport.y = part.viewBox.y * part.viewport.x / part.viewBox.x
-	default:
-		err = tmpErr
-		return
 	}
 	svg = regexp.MustCompile("<\\?xml.*\\?>").ReplaceAllString(svg, "")
 	svg = regexp.MustCompile("<svg.*?>").ReplaceAllString(svg, "")
