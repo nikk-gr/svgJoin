@@ -11,17 +11,18 @@ func (s *xy) add(x xy) {
 	s.x += x.x
 	s.y += x.y
 }
+func (s *xy) sub(x xy) {
+	s.x -= x.x
+	s.y -= x.y
+}
 
-func (s Chunk) print(pos xy) (result string, err error) {
-	if  s.viewBox.x == 0 || s.viewBox.y == 0 || s.viewport.x == 0 || s.viewport.y == 0 {
+func (s Chunk) print(pos xy, id *clipId) (result string, err error) {
+	if s.viewBox.x == 0 || s.viewBox.y == 0 || s.viewport.x == 0 || s.viewport.y == 0 {
 		if s.body == "" && s.viewBox.x == 0 && s.viewBox.y == 0 && s.viewport.x == 0 && s.viewport.y == 0 {
 			return
 		}
 		var errStr string
 		if s.viewBox.x == 0 {
-			if errStr != "" {
-				errStr += ", "
-			}
 			errStr += "viewbox width"
 		}
 		if s.viewBox.y == 0 {
@@ -46,7 +47,7 @@ func (s Chunk) print(pos xy) (result string, err error) {
 		err = errors.New(errStr)
 		return
 	}
-	s.position.add(pos)
+	s.position.sub(pos)
 	var (
 		isTranslate, isScale bool
 	)
@@ -56,14 +57,18 @@ func (s Chunk) print(pos xy) (result string, err error) {
 	if s.position.x != 0 || s.position.y != 0 {
 		isTranslate = true
 	}
-
+	clpId := id.get()
+	result += fmt.Sprintf("<g clip-path=\"url(#clp%d)\">\n", clpId)
+	result += fmt.Sprintf("<clipPath id=\"clp%d\">\n<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" />\n</clipPath>\n", clpId, pos.x, pos.y, s.viewport.x, s.viewport.y)
+	if isTranslate {
+		result += fmt.Sprintf("<g transform=\"translate(%-1g, %-1g)\">\n", -s.position.x, -s.position.y)
+	}
 	if isScale {
 		result += fmt.Sprintf("<g transform=\"scale(%-1g, %-1g)\">\n", s.viewport.x/s.viewBox.x, s.viewport.y/s.viewBox.y)
 	}
-	if isTranslate {
-		result += fmt.Sprintf("<g transform=\"translate(%-1g, %-1g)\">\n", s.position.x, s.position.y)
-	}
+
 	result += s.body
+	result += "\n</g>"
 	if isScale {
 		result += "\n</g>"
 	}
@@ -79,7 +84,7 @@ func (s Chunk) size() xy {
 // rightward, leftward, upward, downward
 // 0 - top, left, 1 - mid, 2 = bottom, right
 
-func (s Group) print(zero xy) (result string, err error) {
+func (s Group) print(zero xy, id *clipId) (result string, err error) {
 	size := s.size()
 
 	var (
@@ -101,24 +106,32 @@ func (s Group) print(zero xy) (result string, err error) {
 		}
 		stp = -1
 	}
+	clpId := id.get()
+	result += fmt.Sprintf("<g clip-path=\"url(#clp%d)\">\n", clpId)
+	result += fmt.Sprintf("<clipPath id=\"clp%d\">\n<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" />\n</clipPath>\n", clpId, zero.x, zero.y, size.x, size.y)
 	for i := from; check(i); i += stp {
-		localZero, err = getCoordinates(localZero, s.body[i].size(), size, s.offset, s.align, s.isVertical)
+
 		resultZero = localZero
 		resultZero.add(zero)
 		if result != "" {
 			result += "\n"
 		}
-		tmp, err = s.body[i].print(resultZero)
+		tmp, err = s.body[i].print(resultZero, id)
+		if err != nil {
+			return "", err
+		}
+		localZero, err = getCoordinates(localZero, s.body[i].size(), size, s.offset, s.align, s.isVertical)
 		if err != nil {
 			return "", err
 		}
 		result += tmp
 	}
+	result += "\n</g>\n"
 	return
 }
 
-func getCoordinates(prev, partSize, groupSize xy, offset float64, align uint, isVertical bool) (new xy, err error) {
-	if isVertical {
+func getCoordinates(prev, partSize, groupSize xy, offset float64, align uint8, isVertical bool) (new xy, err error) {
+	if !isVertical {
 		new.x = prev.x + offset + partSize.x
 		switch align {
 		case 0:
@@ -179,13 +192,15 @@ func (s Group) size() (o xy) {
 
 func (s Group) Draw() (pic string, err error) {
 	size := s.size()
-	pic, err = s.print(xy{})
+	var id clipId
+	pic, err = s.print(xy{}, &id)
 	pic = fmt.Sprintf("<svg width=\"%g\" height=\"%g\" viewBox=\"0 0 %g %g\" xmlns=\"http://www.w3.org/2000/svg\">\n%s\n</svg>", size.x, size.y, size.x, size.y, pic)
 	return
 }
 func (s Chunk) Draw() (pic string, err error) {
 	size := s.size()
-	pic, err = s.print(xy{})
+	var id clipId
+	pic, err = s.print(xy{}, &id)
 	pic = fmt.Sprintf("<svg width=\"%g\" height=\"%g\" viewBox=\"0 0 %g %g\" xmlns=\"http://www.w3.org/2000/svg\">\n%s\n</svg>", size.x, size.y, size.x, size.y, pic)
 	return
 }

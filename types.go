@@ -3,9 +3,7 @@
 package svgJoin
 
 type (
-	direction rune
-	align     rune
-	xy        struct {
+	xy struct {
 		x, y float64
 	}
 	Chunk struct {
@@ -17,10 +15,10 @@ type (
 		isVertical bool
 		toForward  bool
 		offset     float64
-		align      uint
+		align      uint8
 	}
 	part interface {
-		print(xy) (string, error)
+		print(xy, *clipId) (string, error)
 		size() xy
 	}
 )
