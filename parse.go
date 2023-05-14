@@ -4,6 +4,7 @@ package svgJoin
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -11,38 +12,45 @@ import (
 
 func Parse(svg string) (part Chunk, err error) {
 	var (
-		tmpErr    myErr
 		noViewbox bool
 	)
 	firstLine, err := getFirstLine(svg)
 	if err != nil {
 		return
 	}
-	part.position.x, part.position.y, part.viewBox.x, part.viewBox.y, tmpErr = getViewBoxData(firstLine)
-	switch tmpErr.code {
-	case 0:
-	case 11:
-		noViewbox = true
-	default:
-		err = tmpErr
+	part.position.x, part.position.y, part.viewBox.x, part.viewBox.y, err = getViewBoxData(firstLine)
+	if err != nil {
+		if err.Error() == "viewbox not found" {
+			noViewbox = true
+			err = nil
+		} else {
+			return
+		}
+	}
+	part.viewport.x, part.viewport.y, err = getSize(firstLine)
+	if err != nil && noViewbox {
+		err = fmt.Errorf("no svg size data. Viewbox not found and %w", err)
 		return
 	}
-	part.viewport.x, part.viewport.y, tmpErr = getSize(firstLine)
-	if tmpErr.code != 0 && noViewbox {
-		err = errors.New("no svg size data")
-		return
-	}
-	switch tmpErr.code {
-	case 0:
+	if err == nil {
 		if noViewbox {
 			part.viewBox = part.viewport
 		}
-	default:
-		part.viewport = part.viewBox
-	case 21:
-		part.viewport.x = part.viewBox.x * part.viewport.y / part.viewBox.y
-	case 22:
-		part.viewport.y = part.viewBox.y * part.viewport.x / part.viewBox.x
+	} else {
+		v := strings.TrimSpace(err.Error())
+		switch v {
+		default:
+			return
+		case "no viewport data %!w(<nil>) %!w(<nil>)":
+			part.viewport = part.viewBox
+			err = nil
+		case "no viewport width data %!w(<nil>)":
+			part.viewport.x = part.viewBox.x * part.viewport.y / part.viewBox.y
+			err = nil
+		case "no viewport height data %!w(<nil>)":
+			part.viewport.y = part.viewBox.y * part.viewport.x / part.viewBox.x
+			err = nil
+		}
 	}
 	svg = regexp.MustCompile("<\\?xml.*\\?>").ReplaceAllString(svg, "")
 	svg = regexp.MustCompile("<svg.*?>").ReplaceAllString(svg, "")
@@ -52,7 +60,7 @@ func Parse(svg string) (part Chunk, err error) {
 	return
 }
 
-func getViewBoxData(firstLine string) (x0, y0, w, h float64, err myErr) {
+func getViewBoxData(firstLine string) (x0, y0, w, h float64, err error) {
 	firstLine = regexp.MustCompile(",").ReplaceAllString(firstLine, " ")
 	viewBoxFind := regexp.MustCompile("viewBox=\".+?\"") // regular expression for viewbox
 
@@ -65,10 +73,10 @@ func getViewBoxData(firstLine string) (x0, y0, w, h float64, err myErr) {
 		var counter uint8
 		for i := 0; i < len(values); i++ {
 			if values[i] != "" {
-				var err1 error
-				tmp, err1 = strconv.ParseFloat(values[i], 64)
-				if err1 != nil {
-					err = wrapErr(10, err1)
+				tmp, err = strconv.ParseFloat(values[i], 64)
+				if err != nil {
+					err = fmt.Errorf("invalid viewbox format %w", err)
+					return
 				}
 				switch counter {
 				case 0:
@@ -84,17 +92,17 @@ func getViewBoxData(firstLine string) (x0, y0, w, h float64, err myErr) {
 			}
 		}
 		if counter != 4 {
-			err = newErr(10)
+			err = errors.New("invalid viewbox format")
 		}
 
 		return
 	} else {
-		err = newErr(11)
+		err = errors.New("viewbox not found")
 		return
 	}
 }
 
-func getSize(firstLine string) (w, h float64, err myErr) {
+func getSize(firstLine string) (w, h float64, err error) {
 	var (
 		isW, isH   bool
 		errW, errH error
@@ -119,11 +127,11 @@ func getSize(firstLine string) (w, h float64, err myErr) {
 	}
 	switch {
 	case !isW && !isH:
-		err = wrapErr(20, errW, errH)
+		err = fmt.Errorf("no viewport data %w %w", errW, errH)
 	case !isW && isH:
-		err = wrapErr(21, errW)
+		err = fmt.Errorf("no viewport width data %w", errW)
 	case isW && !isH:
-		err = wrapErr(22, errH)
+		err = fmt.Errorf("no viewport height data %w", errH)
 	}
 	return
 }
