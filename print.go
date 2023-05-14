@@ -110,8 +110,16 @@ func (s Group) print(zero xy, id *clipId) (result string, err error) {
 	result += fmt.Sprintf("<g clip-path=\"url(#clp%d)\">\n", clpId)
 	result += fmt.Sprintf("<clipPath id=\"clp%d\">\n<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" />\n</clipPath>\n", clpId, zero.x, zero.y, size.x, size.y)
 	for i := from; check(i); i += stp {
+		localZero, err = getCoordinates(localZero, s.body[i].size(), size, s.offset, s.align, s.isVertical)
+		if err != nil {
+			return "", err
+		}
+		if s.isVertical {
+			resultZero.x = localZero.x
+		} else {
+			resultZero.y = localZero.y
+		}
 
-		resultZero = localZero
 		resultZero.add(zero)
 		if result != "" {
 			result += "\n"
@@ -120,10 +128,7 @@ func (s Group) print(zero xy, id *clipId) (result string, err error) {
 		if err != nil {
 			return "", err
 		}
-		localZero, err = getCoordinates(localZero, s.body[i].size(), size, s.offset, s.align, s.isVertical)
-		if err != nil {
-			return "", err
-		}
+		resultZero = localZero
 		result += tmp
 	}
 	result += "\n</g>\n"

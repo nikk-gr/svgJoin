@@ -119,6 +119,12 @@ func TestParse(t *testing.T) {
 			err: errors.New("invalid viewbox format"),
 		},
 		{
+			pic: `<svg width="200" height="200" viewBox="23rd 200 200 323" xmlns="http://www.w3.org/2000/svg">
+<rect width="100" height="100" x="50" y="50" />
+</svg>`,
+			err: errors.New("invalid viewbox format strconv.ParseFloat: parsing \"23rd\": invalid syntax"),
+		},
+		{
 			pic: `<svg width="200" height="200" viewBox="0 0 ere 200" xmlns="http://www.w3.org/2000/svg">
 <rect width="100" height="100" x="50" y="50" />
 </svg>`,
