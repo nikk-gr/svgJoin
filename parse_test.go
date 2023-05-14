@@ -98,7 +98,7 @@ func TestParse(t *testing.T) {
 			pic: `<svg width="e3" height="200" xmlns="http://www.w3.org/2000/svg">
 <rect width="100" height="100" x="50" y="50" />
 </svg>`,
-			err: errors.New("no svg size data. Viewbox not found and no viewport width data %!w(<nil>)"),
+			err: errors.New("no svg size data. Viewbox not found and no viewport width data strconv.ParseFloat: parsing \"e3\": invalid syntax"),
 		},
 		{
 			pic: `<sg width="e3" height="200" xmlns="http://www.w3.org/2000/svg">
@@ -129,6 +129,12 @@ func TestParse(t *testing.T) {
 <rect width="100" height="100" x="50" y="50" />
 </svg>`,
 			err: errors.New("invalid viewbox format strconv.ParseFloat: parsing \"ere\": invalid syntax"),
+		},
+		{
+			pic: `<svg width="200" height="2egf" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<rect width="100" height="100" x="50" y="50" />
+</svg>`,
+			err: errors.New("no viewport height data strconv.ParseFloat: parsing \"2egf\": invalid syntax"),
 		},
 	}
 

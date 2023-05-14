@@ -107,8 +107,8 @@ func getSize(firstLine string) (w, h float64, err error) {
 		isW, isH   bool
 		errW, errH error
 	)
-	wString := regexp.MustCompile("width=\"\\d+\\.?\\d*\"").FindAllString(firstLine, 1)
-	hString := regexp.MustCompile("height=\"\\d+\\.?\\d*\"").FindAllString(firstLine, 1)
+	wString := regexp.MustCompile("width=\".*?\"").FindAllString(firstLine, 1)
+	hString := regexp.MustCompile("height=\".*?\"").FindAllString(firstLine, 1)
 	if len(wString) > 0 {
 		wString[0] = regexp.MustCompile("width=\"").ReplaceAllString(wString[0], "")
 		wString[0] = regexp.MustCompile("\"").ReplaceAllString(wString[0], "")
