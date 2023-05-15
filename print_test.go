@@ -104,7 +104,7 @@ func TestGroup_Draw(t *testing.T) {
 		{
 			in: Group{
 				toForward: true,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{200, 200},
 						viewBox:  xy{200, 200},
@@ -112,7 +112,7 @@ func TestGroup_Draw(t *testing.T) {
 						body:     "<rect width=\"100\" height=\"100\" x=\"50\" y=\"50\" />",
 					},
 					Group{
-						body: []part{
+						body: []Part{
 							Chunk{
 								viewport: xy{200, 200},
 								viewBox:  xy{200, 200},
@@ -173,7 +173,7 @@ func TestGroup_Draw(t *testing.T) {
 		{
 			in: Group{
 				toForward: true,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{200, 200},
 						viewBox:  xy{0, 0},
@@ -188,7 +188,7 @@ func TestGroup_Draw(t *testing.T) {
 			in: Group{
 				toForward: false,
 				align:     5,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{200, 200},
 						viewBox:  xy{200, 200},
@@ -204,7 +204,7 @@ func TestGroup_Draw(t *testing.T) {
 				isVertical: true,
 				toForward:  false,
 				align:      5,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{200, 200},
 						viewBox:  xy{200, 200},
@@ -219,7 +219,7 @@ func TestGroup_Draw(t *testing.T) {
 			in: Group{
 				toForward: false,
 				align:     1,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{100, 100},
 						viewBox:  xy{100, 100},
@@ -266,7 +266,7 @@ func TestGroup_Draw(t *testing.T) {
 				isVertical: false,
 				toForward:  false,
 				align:      2,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{100, 100},
 						viewBox:  xy{100, 100},
@@ -312,7 +312,7 @@ func TestGroup_Draw(t *testing.T) {
 				isVertical: true,
 				toForward:  false,
 				align:      0,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{100, 100},
 						viewBox:  xy{100, 100},
@@ -356,7 +356,7 @@ func TestGroup_Draw(t *testing.T) {
 				isVertical: true,
 				toForward:  false,
 				align:      1,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{100, 100},
 						viewBox:  xy{100, 100},
@@ -403,7 +403,7 @@ func TestGroup_Draw(t *testing.T) {
 				isVertical: true,
 				toForward:  true,
 				align:      2,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{100, 100},
 						viewBox:  xy{100, 100},

@@ -14,7 +14,7 @@ func TestJoin(t *testing.T) {
 		direction direction
 		align     align
 		offset    float64
-		in        []part
+		in        []Part
 		res       Group
 		err       error
 	}
@@ -35,7 +35,7 @@ func TestJoin(t *testing.T) {
 			direction: Rightward,
 			align:     Top,
 			offset:    0,
-			in: []part{
+			in: []Part{
 				Chunk{
 					viewport: xy{200, 200},
 					viewBox:  xy{200, 200},
@@ -43,7 +43,7 @@ func TestJoin(t *testing.T) {
 					body:     "<rect width=\"100\" height=\"100\" x=\"50\" y=\"50\" />",
 				},
 				Group{
-					body: []part{
+					body: []Part{
 						Chunk{
 							viewport: xy{200, 200},
 							viewBox:  xy{200, 200},
@@ -61,7 +61,7 @@ func TestJoin(t *testing.T) {
 			},
 			res: Group{
 				toForward: true,
-				body: []part{
+				body: []Part{
 					Chunk{
 						viewport: xy{200, 200},
 						viewBox:  xy{200, 200},
@@ -69,7 +69,7 @@ func TestJoin(t *testing.T) {
 						body:     "<rect width=\"100\" height=\"100\" x=\"50\" y=\"50\" />",
 					},
 					Group{
-						body: []part{
+						body: []Part{
 							Chunk{
 								viewport: xy{200, 200},
 								viewBox:  xy{200, 200},
@@ -89,7 +89,7 @@ func TestJoin(t *testing.T) {
 		},
 		{
 			direction: Upward,
-			align:     Midle,
+			align:     Middle,
 			offset:    0,
 
 			res: Group{
@@ -111,7 +111,7 @@ func TestJoin(t *testing.T) {
 		},
 		{
 			direction: Downward,
-			align:     Midle,
+			align:     Middle,
 			offset:    0,
 
 			res: Group{
@@ -122,7 +122,14 @@ func TestJoin(t *testing.T) {
 		},
 		{
 			direction: 5,
-			align:     Midle,
+			align:     Left,
+			offset:    0,
+
+			err: errors.New("invalid direction code"),
+		},
+		{
+			direction: 5,
+			align:     Right,
 			offset:    0,
 
 			err: errors.New("invalid direction code"),

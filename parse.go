@@ -109,10 +109,11 @@ func getSize(firstLine string) (w, h float64, err error) {
 	)
 	wString := regexp.MustCompile("width=\".*?\"").FindAllString(firstLine, 1)
 	hString := regexp.MustCompile("height=\".*?\"").FindAllString(firstLine, 1)
+
 	if len(wString) > 0 {
 		wString[0] = regexp.MustCompile("width=\"").ReplaceAllString(wString[0], "")
 		wString[0] = regexp.MustCompile("\"").ReplaceAllString(wString[0], "")
-		w, errW = strconv.ParseFloat(wString[0], 64)
+		w, errW = parseSize(wString[0])
 		if errW == nil {
 			isW = true
 		}
@@ -120,7 +121,7 @@ func getSize(firstLine string) (w, h float64, err error) {
 	if len(hString) > 0 {
 		hString[0] = regexp.MustCompile("height=\"").ReplaceAllString(hString[0], "")
 		hString[0] = regexp.MustCompile("\"").ReplaceAllString(hString[0], "")
-		h, errH = strconv.ParseFloat(hString[0], 64)
+		h, errH = parseSize(hString[0])
 		if errH == nil {
 			isH = true
 		}
@@ -133,6 +134,47 @@ func getSize(firstLine string) (w, h float64, err error) {
 	case isW && !isH:
 		err = fmt.Errorf("no viewport height data %w", errH)
 	}
+	return
+}
+
+func parseSize(s string) (f float64, e error) {
+	var k float64 = 1
+	pt := regexp.MustCompile("pt")
+	px := regexp.MustCompile("px")
+	in := regexp.MustCompile("in")
+	cm := regexp.MustCompile("cm")
+	mm := regexp.MustCompile("mm")
+	pc := regexp.MustCompile("pc")
+	em := regexp.MustCompile("em")
+	ex := regexp.MustCompile("ex")
+	switch {
+	case pt.MatchString(s):
+		s = pt.ReplaceAllString(s, "")
+		k = 48.0 / 36.0
+	case px.MatchString(s):
+		s = px.ReplaceAllString(s, "")
+	case in.MatchString(s):
+		s = in.ReplaceAllString(s, "")
+		k = 96
+	case cm.MatchString(s):
+		s = cm.ReplaceAllString(s, "")
+		k = 37.7952755906
+	case mm.MatchString(s):
+		s = mm.ReplaceAllString(s, "")
+		k = 3.7795275591
+	case pc.MatchString(s):
+		s = pc.ReplaceAllString(s, "")
+		k = 16
+	case em.MatchString(s):
+		e = errors.New("em not supported. Use pt")
+		return
+	case ex.MatchString(s):
+		e = errors.New("ex not supported. Use px")
+		return
+
+	}
+	f, e = strconv.ParseFloat(s, 64)
+	f *= k
 	return
 }
 

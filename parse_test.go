@@ -142,3 +142,69 @@ func TestParse(t *testing.T) {
 		doTest(k, v)
 	}
 }
+
+func TestParseSize(t *testing.T) {
+	type testCase struct {
+		in  string
+		res float64
+		err error
+	}
+	doTest := func(i int, c testCase) {
+		t.Logf("Test %d\tstart", i)
+		res, err := parseSize(c.in)
+
+		if fmt.Sprint(err) != fmt.Sprint(c.err) {
+			t.Errorf("%sTest %d failed%s\twant: %s, got: %s\n", red, i, normal, c.err, err)
+		} else if err == nil && res != c.res {
+			t.Errorf("%sTest %d failed%s\twant: %s, got: %s\n", red, i, normal, fmt.Sprint(c.res), fmt.Sprint(res))
+		} else {
+			t.Logf("%sTest %d  success%s\t%s\n", green, i, normal, "")
+		}
+	}
+	testArray := []testCase{
+		{
+			in:  "10px",
+			res: 10,
+		},
+		{
+			in:  "10pt",
+			res: 13.333333333333332,
+		},
+		{
+			in:  "10pc",
+			res: 160,
+		},
+		{
+			in:  "10cm",
+			res: 377.952755906,
+		},
+		{
+			in:  "10mm",
+			res: 37.795275591,
+		},
+		{
+			in:  "10in",
+			res: 960,
+		},
+		{
+			in:  "10",
+			res: 10,
+		},
+		{
+			in:  "10em",
+			err: errors.New("em not supported. Use pt"),
+		},
+		{
+			in:  "10ex",
+			err: errors.New("ex not supported. Use px"),
+		},
+		{
+			in:  "abc",
+			err: errors.New("strconv.ParseFloat: parsing \"abc\": invalid syntax"),
+		},
+	}
+
+	for k, v := range testArray {
+		doTest(k, v)
+	}
+}

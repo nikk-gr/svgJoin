@@ -16,12 +16,12 @@ const (
 	Downward  direction = 'D'
 	Top       align     = 0
 	Left      align     = 0
-	Midle     align     = 1
+	Middle    align     = 1
 	Bottom    align     = 2
 	Right     align     = 2
 )
 
-func Join(direction direction, align align, offset float64, parts ...part) (res Group, err error) {
+func Join(direction direction, align align, offset float64, parts ...Part) (res Group, err error) {
 	if align > 2 {
 		err = errors.New("invalid align code")
 		return

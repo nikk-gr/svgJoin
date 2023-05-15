@@ -11,13 +11,13 @@ type (
 		body                        string
 	}
 	Group struct {
-		body       []part
+		body       []Part
 		isVertical bool
 		toForward  bool
 		offset     float64
 		align      uint8
 	}
-	part interface {
+	Part interface {
 		print(xy, *clipId) (string, error)
 		size() xy
 	}
