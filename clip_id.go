@@ -1,3 +1,5 @@
+// Package svgJoin Copyright 2023 Gryaznov Nikita
+// Licensed under the Apache License, Version 2.0
 package svgJoin
 
 import "sync"
