@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="644px" height="762px" viewBox="0 0 644 762" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>STS2</title>
+    <g id="STS2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BOX" fill="#FFFFFF" stroke="#303030" stroke-opacity="0.95" stroke-width="4">
+            <rect id="Rectangle" x="2" y="2" width="640" height="640" rx="14"></rect>
+        </g>
+        <g id="BF" transform="translate(0.000000, 644.000000)" stroke="#303030" stroke-opacity="0.95">
+            <rect id="Rectangle-Copy-7" stroke-width="4" fill="#FFFFFF" x="2" y="2" width="640" height="54" rx="14"></rect>
+            <line x1="322" y1="-307" x2="322" y2="337" id="Line-3-Copy" stroke-width="2" transform="translate(322.000000, 15.000000) rotate(-90.000000) translate(-322.000000, -15.000000) "></line>
+            <line x1="322" y1="-278" x2="322" y2="366" id="Line-3-Copy" stroke-width="2" transform="translate(322.000000, 44.000000) rotate(-90.000000) translate(-322.000000, -44.000000) "></line>
+        </g>
+        <line x1="643" y1="703" x2="643" y2="761" id="Line-2" stroke-opacity="0.95" stroke="#303030" stroke-width="2" stroke-linecap="round"></line>
+        <line x1="1" y1="703" x2="1" y2="761" id="Line-2" stroke-opacity="0.95" stroke="#303030" stroke-width="2" stroke-linecap="round"></line>
+        <path id="Line-3" d="M17.1215755,746.759739 C17.3923393,747.241097 17.2216191,747.850812 16.7402612,748.121576 L8.067,753 L635.932,753 L627.259739,748.121576 C626.812764,747.870152 626.633634,747.326469 626.827113,746.864681 L626.878424,746.759739 C627.149188,746.278381 627.758903,746.107661 628.240261,746.378424 L640.240261,753.128424 L641.789729,754 L640.240261,754.871576 L628.240261,761.621576 C627.758903,761.892339 627.149188,761.721619 626.878424,761.240261 C626.607661,760.758903 626.778381,760.149188 627.259739,759.878424 L635.932,755 L8.067,755 L16.7402612,759.878424 C17.1872364,760.129848 17.3663659,760.673531 17.1728866,761.135319 L17.1215755,761.240261 C16.8508117,761.721619 16.2410966,761.892339 15.7597388,761.621576 L3.75973876,754.871576 L2.21027114,754 L3.75973876,753.128424 L15.7597388,746.378424 C16.2410966,746.107661 16.8508117,746.278381 17.1215755,746.759739 Z" fill-opacity="0.95" fill="#303030" fill-rule="nonzero"></path>
+        <text id="{{-.Length.Lower-}}" font-family="ArialMT, Arial" font-size="24" font-weight="normal" letter-spacing="-0.00233333333" fill="#303030" fill-opacity="0.95">
+            <tspan x="223.76826" y="750">{{ .Length.Lower }}</tspan>
+        </text>
+        <g id="STS-Copy" transform="translate(58.000000, 58.000000)" stroke="#303030" stroke-opacity="0.95" stroke-width="2">
+            <rect id="Rectangle" fill="#FFFFFF" x="1" y="1" width="526" height="526" rx="22"></rect>
+            <line x1="264" y1="201" x2="264" y2="527" id="Line-3-Copy" stroke-linecap="round"></line>
+            <line x1="95" y1="1" x2="95" y2="327" id="Line-3" stroke-linecap="round"></line>
+            <line x1="433" y1="1" x2="433" y2="327" id="Line-3" stroke-linecap="round"></line>
+        </g>
+    </g>
+</svg>

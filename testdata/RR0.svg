@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="398px" height="1484px" viewBox="0 0 398 1484" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>RR0</title>
+    <g id="RR0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BOX" transform="translate(0.000000, 78.000000)" fill="#FFFFFF" stroke="#303030" stroke-opacity="0.95" stroke-width="4">
+            <rect id="Rectangle" x="2" y="2" width="394" height="1284" rx="14"></rect>
+        </g>
+        <line x1="2.65620859e-13" y1="722" x2="58" y2="722" id="Line" stroke-opacity="0.95" stroke="#303030" stroke-width="2"></line>
+        <line x1="340" y1="722" x2="398" y2="722" id="Line" stroke-opacity="0.95" stroke="#303030" stroke-width="2"></line>
+        <g id="BF" transform="translate(0.000000, 1366.000000)" stroke="#303030" stroke-opacity="0.95">
+            <rect id="Rectangle-Copy-7" stroke-width="4" fill="#FFFFFF" x="2" y="2" width="394" height="54" rx="14"></rect>
+            <line x1="199" y1="-184" x2="199" y2="214" id="Line-3-Copy" stroke-width="2" transform="translate(199.000000, 15.000000) rotate(-90.000000) translate(-199.000000, -15.000000) "></line>
+            <line x1="199" y1="-155" x2="199" y2="243" id="Line-3-Copy" stroke-width="2" transform="translate(199.000000, 44.000000) rotate(-90.000000) translate(-199.000000, -44.000000) "></line>
+        </g>
+        <line x1="1" y1="1425" x2="1" y2="1483" id="Line-2" stroke-opacity="0.95" stroke="#303030" stroke-width="2" stroke-linecap="round"></line>
+        <path id="Line-3" d="M17.1215755,1468.75974 C17.3923393,1469.2411 17.2216191,1469.85081 16.7402612,1470.12158 L8.067,1475 L389.932,1475 L381.259739,1470.12158 C380.812764,1469.87015 380.633634,1469.32647 380.827113,1468.86468 L380.878424,1468.75974 C381.149188,1468.27838 381.758903,1468.10766 382.240261,1468.37842 L394.240261,1475.12842 L395.789729,1476 L394.240261,1476.87158 L382.240261,1483.62158 C381.758903,1483.89234 381.149188,1483.72162 380.878424,1483.24026 C380.607661,1482.7589 380.778381,1482.14919 381.259739,1481.87842 L389.932,1477 L8.067,1477 L16.7402612,1481.87842 C17.1872364,1482.12985 17.3663659,1482.67353 17.1728866,1483.13532 L17.1215755,1483.24026 C16.8508117,1483.72162 16.2410966,1483.89234 15.7597388,1483.62158 L3.75973876,1476.87158 L2.21027114,1476 L3.75973876,1475.12842 L15.7597388,1468.37842 C16.2410966,1468.10766 16.8508117,1468.27838 17.1215755,1468.75974 Z" fill-opacity="0.95" fill="#303030" fill-rule="nonzero"></path>
+        <text id="{{-.Length.Lower-}}" font-family="ArialMT, Arial" font-size="24" font-weight="normal" letter-spacing="-0.00233333333" fill="#303030" fill-opacity="0.95">
+            <tspan x="100.26826" y="1472">{{ .Length.Lower }}</tspan>
+        </text>
+        <g id="R" transform="translate(58.000000, 136.000000)" stroke="#303030" stroke-opacity="0.95" stroke-width="2">
+            <rect id="Rectangle" fill="#FFFFFF" x="1" y="1" width="280" height="1170" rx="22"></rect>
+            <path d="M210.880727,202.292599 C202.215709,109.916956 175.701412,58 140.301904,58 C58.0104982,58 57.8682018,369.899194 58.0104982,583.057585 C58.1871991,848.355653 58.1871991,1114 141.005249,1114 C223.823299,1114 224,849.836533 224,583.057585" id="Path-4" stroke-linecap="round"></path>
+            <polyline id="Path-5" stroke-linecap="round" points="214.031628 602.128958 224 583.057585 233.972782 602.128958"></polyline>
+        </g>
+        <line x1="1" y1="19" x2="1" y2="77" id="Line-2" stroke-opacity="0.95" stroke="#303030" stroke-width="2" stroke-linecap="round"></line>
+        <path id="Line-3" d="M18.1402437,17.7910847 C18.4097628,18.2731406 18.2374676,18.8824126 17.7554117,19.1519317 L9.069,24.008 L17.2487582,24.0290632 L381.75641,24.9709435 L389.935,24.992 L381.274968,20.0912587 C380.828644,19.838681 380.65092,19.2945374 380.845591,18.8332507 L380.897174,18.7284411 C381.16918,18.2477845 381.779334,18.0786403 382.259991,18.3506471 L394.242509,25.1316322 L395.78972,26.0072086 L394.238005,26.8747774 L382.220603,33.5937472 C381.738547,33.8632663 381.129275,33.6909712 380.859756,33.2089153 C380.590237,32.7268594 380.762532,32.1175874 381.244588,31.8480683 L389.93,26.991 L381.751242,26.9709368 L17.2435902,26.0290565 L9.064,26.007 L17.7250324,30.9087413 C18.1713564,31.161319 18.3490804,31.7054626 18.1544085,32.1667493 L18.1028264,32.2715589 C17.8308197,32.7522155 17.2206655,32.9213597 16.7400089,32.6493529 L4.75749078,25.8683678 L3.21028045,24.9927914 L4.76199503,24.1252226 L16.7793968,17.4062528 C17.2614527,17.1367337 17.8707246,17.3090288 18.1402437,17.7910847 Z" fill-opacity="0.95" fill="#303030" fill-rule="nonzero"></path>
+        <text id="{{-.Length.Upper-}}" font-family="ArialMT, Arial" font-size="24" font-weight="normal" letter-spacing="-0.00233333333" fill="#303030" fill-opacity="0.95">
+            <tspan x="100.76826" y="22">{{ .Length.Upper }}</tspan>
+        </text>
+        <line x1="397" y1="19" x2="397" y2="77" id="Line-2" stroke-opacity="0.95" stroke="#303030" stroke-width="2" stroke-linecap="round"></line>
+        <line x1="397" y1="1425" x2="397" y2="1483" id="Line-2" stroke-opacity="0.95" stroke="#303030" stroke-width="2" stroke-linecap="round"></line>
+    </g>
+</svg>
