@@ -19,3 +19,10 @@ Three steps required to join pictures
 ## Parse
 `Parse(svg string)(result Chink, err error)` prepare picture to the following join. Error returns if svg have invalid <svg…> tag. Deeper structure is not checked.
 
+## Join
+`Join(direction, align, offset, parts) (Group, error)` combine chinks and groups into groups. Following directions is possible:
+1. right to left
+2. left to right
+3. top to bottom
+4. bottom to top
+
