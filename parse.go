@@ -10,6 +10,9 @@ import (
 	"strings"
 )
 
+// Parse prepare a svg string to be joined with others
+// Error returns if <svg…> tag has a wrong format
+// Deeper structure is not checked
 func Parse(svg string) (part Chunk, err error) {
 	var (
 		noViewbox bool
@@ -60,6 +63,7 @@ func Parse(svg string) (part Chunk, err error) {
 	return
 }
 
+// getViewBoxData returns four numbers from the viewbox
 func getViewBoxData(firstLine string) (x0, y0, w, h float64, err error) {
 	firstLine = regexp.MustCompile(",").ReplaceAllString(firstLine, " ")
 	viewBoxFind := regexp.MustCompile("viewBox=\".+?\"") // regular expression for viewbox
@@ -102,6 +106,7 @@ func getViewBoxData(firstLine string) (x0, y0, w, h float64, err error) {
 	}
 }
 
+// getViewBoxData returns two numbers of the viewport
 func getSize(firstLine string) (w, h float64, err error) {
 	var (
 		isW, isH   bool
@@ -137,6 +142,8 @@ func getSize(firstLine string) (w, h float64, err error) {
 	return
 }
 
+// parseSize parse value with units of measurement
+// Return result in px
 func parseSize(s string) (f float64, e error) {
 	var k float64 = 1
 	pt := regexp.MustCompile("pt")
@@ -178,6 +185,7 @@ func parseSize(s string) (f float64, e error) {
 	return
 }
 
+// selects the <svg… > tag from the body
 func getFirstLine(body string) (firstLine string, err error) {
 	firstLineArr := regexp.MustCompile("<svg.*?>").FindAllString(body, 1)
 	if len(firstLineArr) == 0 {

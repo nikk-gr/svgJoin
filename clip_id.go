@@ -9,6 +9,7 @@ type clipId struct {
 	rw sync.Mutex
 }
 
+// get returns a uniq uint64 number
 func (s *clipId) get() (id uint64) {
 	s.rw.Lock()
 	defer s.rw.Unlock()
