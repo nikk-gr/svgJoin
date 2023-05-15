@@ -17,3 +17,5 @@ Three steps required to join pictures
 
 # Functions and methods
 ## Parse
+`Parse(svg string)(result Chink, err error)` prepare picture to the following join. Error returns if svg have invalid <svg…> tag. Deeper structure is not checked.
+
